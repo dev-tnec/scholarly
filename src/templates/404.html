@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Halaman tidak ditemukan | Scholarly{% endblock %}
+{% block meta_description %}Halaman yang kamu cari tidak tersedia. Kembali ke direktori beasiswa Scholarly untuk melihat daftar beasiswa.{% endblock %}
+{% block canonical %}{{ base_url }}/{% endblock %}
+{% block robots %}noindex, follow{% endblock %}
+{% block content %}
+<div class="container">
+  <section class="card empty-card not-found-card">
+    <p class="micro-label">404</p>
+    <h1>Halaman tidak ditemukan</h1>
+    <p>Halaman yang kamu cari tidak tersedia. Beasiswa yang sudah ditutup tetap tampil di direktori, jadi coba cari dari halaman utama.</p>
+    <a class="btn btn--primary" href="/">Kembali ke Direktori</a>
+  </section>
+</div>
+{% endblock %}

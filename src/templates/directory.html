@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block meta_description %}{{ meta_description }}{% endblock %}
+{% block canonical %}{{ canonical }}{% endblock %}
+{% block robots %}{{ robots }}{% endblock %}
+{% block rel_links %}{% if !rel_prev.is_empty() %}<link rel="prev" href="{{ rel_prev }}">{% endif %}{% if !rel_next.is_empty() %}<link rel="next" href="{{ rel_next }}">{% endif %}{% endblock %}
+{% block extra_head %}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Scholarly">
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ meta_description }}">
+<meta property="og:url" content="{{ canonical }}">
+<meta name="twitter:title" content="{{ title }}">
+<meta name="twitter:description" content="{{ meta_description }}">
+<script type="application/ld+json">{{ website_jsonld|safe }}</script>
+<script type="application/ld+json">{{ itemlist_jsonld|safe }}</script>
+{% endblock %}
+{% block content %}
+<section class="hero" aria-label="Program Titik Nol">
+  <div class="hero-inner">
+    <div class="hero-viewport" data-carousel>
+      <ol class="hero-track" aria-live="off">
+        <li class="hero-slide is-active" role="group" aria-roledescription="slide" aria-label="1 dari 3">
+          <p class="kicker">Program Titik Nol</p>
+          <h1 class="hero-title">Siapkan beasiswamu dari <span class="accent">titik nol</span></h1>
+          <p class="hero-desc">Pendampingan pendaftaran beasiswa dari riset program sampai submit dokumen.</p>
+          <div class="hero-actions">
+            <a class="btn btn--primary" href="https://titiknolenglish.com/beasiswa-kursus-kampung-inggris/">Ikut Mentoring</a>
+            <a class="btn btn--secondary-light" href="https://titiknolenglish.com/beasiswa-kursus-kampung-inggris/">Lihat Program</a>
+          </div>
+        </li>
+        <li class="hero-slide" role="group" aria-roledescription="slide" aria-label="2 dari 3">
+          <p class="kicker">Beasiswa Luar Negeri</p>
+          <p class="hero-title">IELTS dulu, beasiswa menyusul</p>
+          <p class="hero-desc">Skor IELTS kamu adalah pintu masuk beasiswa S2 dan S3 di luar negeri.</p>
+          <div class="hero-actions">
+            <a class="btn btn--primary" href="https://titiknolenglish.com/">Coba Kelas IELTS</a>
+            <a class="btn btn--secondary-light" href="/#beasiswa">Baca Syarat Beasiswa</a>
+          </div>
+        </li>
+        <li class="hero-slide" role="group" aria-roledescription="slide" aria-label="3 dari 3">
+          <p class="kicker">Beasiswa S1</p>
+          <p class="hero-title">Pemula tidak masalah</p>
+          <p class="hero-desc">Mulai dari nol dengan persiapan TOEFL dan dokumen pendaftaran yang rapi.</p>
+          <div class="hero-actions">
+            <a class="btn btn--primary" href="https://titiknolenglish.com/">Mulai Persiapan</a>
+            <a class="btn btn--secondary-light" href="https://titiknolenglish.com/">Chat Minol</a>
+          </div>
+        </li>
+      </ol>
+    </div>
+    <div class="hero-controls">
+      <div class="hero-arrows">
+        <button class="hero-arrow" type="button" data-carousel-prev aria-label="Slide sebelumnya"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12.5 4 6.5 10l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="hero-arrow" type="button" data-carousel-next aria-label="Slide selanjutnya"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <span class="hero-counter meta13" data-carousel-counter>01 / 03</span>
+      </div>
+      <div class="hero-dots" data-carousel-dots>
+        <button class="hero-dot is-active" type="button" aria-label="Buka slide 1"></button>
+        <button class="hero-dot" type="button" aria-label="Buka slide 2"></button>
+        <button class="hero-dot" type="button" aria-label="Buka slide 3"></button>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="search-band">
+  <div class="container">
+    <form class="search-row" method="get" action="/" role="search">
+      <div class="search-input-wrap">
+        <span class="search-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6.5" stroke="#9AA6B6" stroke-width="1.8"/><path d="m14 14 4 4" stroke="#9AA6B6" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        <input class="field search-field" type="search" name="q" value="{{ q }}" placeholder="Cari nama beasiswa, negara, atau penyelenggara" aria-label="Cari nama beasiswa, negara, atau penyelenggara">
+      </div>
+      <button class="btn btn--secondary" type="button" data-filter-open aria-expanded="false" aria-controls="filterRail">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5.5h14M6 10h8M9 14.5h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Filter{% if active_count > 0 %} <span class="filter-badge">{{ active_count }}</span>{% endif %}
+      </button>
+      <button class="btn btn--primary" type="submit">Cari</button>
+    </form>
+    <div class="popular-row">
+      <span class="meta13">Paling banyak dicari:</span>
+      {% for chip in popular %}<a class="chip" href="{{ chip.url }}">{{ chip.name }}</a>{% endfor %}
+    </div>
+  </div>
+</section>
+<section class="results-band" id="beasiswa">
+  <div class="container content-grid">
+    <aside class="filter-rail" id="filterRail" aria-label="Filter beasiswa">
+      <div class="sheet-close">
+        <span class="sheet-handle" aria-hidden="true"></span>
+        <button id="filterClose" class="sheet-close-btn" type="button" aria-label="Tutup filter">Tutup</button>
+      </div>
+      <form class="card filter-card" method="get" action="/" data-filter-form>
+        <input type="hidden" name="q" value="{{ q }}">
+        {% if is_deadline %}<input type="hidden" name="sort" value="deadline">{% endif %}
+        {% if is_populer %}<input type="hidden" name="sort" value="populer">{% endif %}
+        <div class="filter-head">
+          <h2>Filter</h2>
+          <a class="filter-reset" href="/">Hapus semua</a>
+        </div>
+        <div class="filter-groups">
+          {% for group in groups %}
+          <details class="filter-group" {% if group.open %}open{% endif %}>
+            <summary>{{ group.label }} <span class="filter-count">{{ group.options.len() }}</span>
+              <svg class="filter-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 7.5 10 13l6-5.5" stroke="#5C6B7F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <fieldset class="filter-options">
+              <legend class="visually-hidden">{{ group.label }}</legend>
+              {% if group.has_search %}
+              <div class="filter-search-wrap">
+                <input class="field filter-search" type="search" placeholder="Cari negara" aria-label="Cari negara" data-filter-search>
+              </div>
+              {% endif %}
+              <div class="filter-options-list" data-filter-options>
+                {% for o in group.options %}
+                <label class="filter-option">
+                  <span class="filter-option-main">
+                    <input type="checkbox" name="{{ group.param }}" value="{{ o.value }}" {% if o.checked %}checked{% endif %}>
+                    <span class="filter-option-label">{{ o.label }}</span>
+                  </span>
+                  <span class="filter-count-num">{{ o.count }}</span>
+                </label>
+                {% endfor %}
+              </div>
+            </fieldset>
+          </details>
+          {% endfor %}
+        </div>
+        <button class="btn btn--primary filter-apply" type="submit">Terapkan Filter</button>
+      </form>
+    </aside>
+    <div class="results-col">
+      <div class="result-head">
+        <p class="meta13 result-line">{{ result_line }}</p>
+        <form class="sort-form" method="get" action="/">
+          {% for (name, value) in sort_hidden %}<input type="hidden" name="{{ name }}" value="{{ value }}">{% endfor %}
+          <label class="meta13" for="sortSelect">Urutkan:</label>
+          <select class="field sort-select" id="sortSelect" name="sort" data-autosubmit>
+            <option value="terbaru" {% if is_terbaru %}selected{% endif %}>Terbaru</option>
+            <option value="deadline" {% if is_deadline %}selected{% endif %}>Deadline Terdekat</option>
+            <option value="populer" {% if is_populer %}selected{% endif %}>Paling Dicari</option>
+          </select>
+          <noscript><button class="btn btn--secondary btn--small" type="submit">Urutkan</button></noscript>
+        </form>
+      </div>
+      {% if active_count > 0 %}
+      <div class="active-chips">
+        <span class="meta13 semibold">Filter aktif:</span>
+        {% for chip in active_chips %}
+        <span class="chip-active">{{ chip.label }}<a class="chip-x" href="{{ chip.remove_url }}" aria-label="Hapus filter {{ chip.label }}"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a></span>
+        {% endfor %}
+        <a class="filter-reset" href="/">Hapus semua</a>
+      </div>
+      {% endif %}
+      {% if total == 0 %}
+      <div class="card empty-card">
+        <h2>Tidak ada beasiswa yang cocok</h2>
+        <p>Coba kurangi filter atau gunakan kata kunci lain.</p>
+        <a class="btn btn--secondary" href="/">Hapus Semua Filter</a>
+      </div>
+      {% else %}
+      <div class="cards">
+        {% for card in cards %}
+        <article class="card card--lift">
+          <span class="card-graphic" aria-hidden="true">{{ card.graphic }}</span>
+          <div class="card-badges">
+            <span class="badge badge-navy">{{ card.levels_label }}</span>
+            <span class="badge {{ card.funding_class }}">{{ card.funding }}</span>
+            {% if !card.urgency.is_empty() %}<span class="badge badge-red">{{ card.urgency }}</span>{% endif %}
+          </div>
+          <h2 class="card-title"><a class="card-link" href="{{ card.url }}">{{ card.name }}</a></h2>
+          <p class="card-provider meta13">{{ card.provider }}</p>
+          <div class="card-meta meta13">
+            <span class="card-meta-row"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM2.5 8h15M10 2c-4 4.5-4 11 0 16M10 2c4 4.5 4 11 0 16" stroke="currentColor" stroke-width="1.4"/></svg><span>{{ card.country }}</span></span>
+            <span class="card-meta-row"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 3 17 6.5 10 10 3 6.5 10 3zM3 10l7 3.5L17 10M3 13.5 10 17l7-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Jenjang {{ card.levels_label }}</span></span>
+            <span class="card-meta-row card-deadline"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="4.5" width="14" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 8.5h14M7 2.5v4M13 2.5v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>{{ card.deadline_label }}</span></span>
+          </div>
+          <div class="card-cta">
+            <a class="btn btn--navy" href="{{ card.url }}">Lihat Detail<svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+      <template id="card-skeleton" aria-hidden="true">
+        <div class="card skeleton-card">
+          <div class="skel skel-badge"></div>
+          <div class="skel skel-line w75"></div>
+          <div class="skel skel-line w50"></div>
+          <div class="skel skel-line w66"></div>
+          <div class="skel skel-line w66"></div>
+          <div class="skel skel-cta"></div>
+        </div>
+      </template>
+      {% endif %}
+      {% if !show_more_url.is_empty() %}
+      <div class="grid-footer">
+        <p class="meta13 grid-count">{{ result_line }}</p>
+        <a class="btn btn--secondary load-more" href="{{ show_more_url }}">Muat Lebih Banyak</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+<div class="filter-scrim" id="filterScrim" aria-hidden="true"></div>
+{% endblock %}

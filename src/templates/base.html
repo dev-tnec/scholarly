@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}{% endblock %}</title>
+<meta name="description" content="{% block meta_description %}{% endblock %}">
+<link rel="canonical" href="{% block canonical %}{% endblock %}">
+<meta name="robots" content="{% block robots %}index, follow, max-image-preview:large, max-snippet:-1{% endblock %}">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="Scholarly">
+{% block og_image %}
+<meta property="og:image" content="https://scholarly.titiknolenglish.com/static/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Scholarly, direktori beasiswa oleh Titik Nol English Course">
+{% endblock %}
+<meta name="twitter:card" content="summary_large_image">
+{% block twitter_image %}<meta name="twitter:image" content="https://scholarly.titiknolenglish.com/static/img/og.png">{% endblock %}
+{% block rel_links %}{% endblock %}
+<link rel="stylesheet" href="/static/css/site.v2.css">
+{% block extra_head %}{% endblock %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Titik Nol English Course","url":"https://titiknolenglish.com"}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Lompat ke konten</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="Scholarly, oleh Titik Nol English Course">
+      <span class="brand-word">Scholarly</span>
+      <span class="brand-sub">by Titik Nol English Course</span>
+    </a>
+    <nav class="site-nav" id="siteNav" aria-label="Navigasi utama">
+      <a href="/" aria-current="page">Beranda</a>
+      <a href="/#beasiswa">Beasiswa</a>
+      <a href="https://titiknolenglish.com/">Tips</a>
+    </nav>
+    <a class="btn btn--primary header-cta" href="https://titiknolenglish.com/beasiswa-kursus-kampung-inggris/">Konsultasi Gratis</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="siteNav" aria-label="Buka menu navigasi" data-nav-toggle>
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M3 5.5h16M3 11h16M3 16.5h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+<main id="main">
+{% block content %}{% endblock %}
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div>
+        <a class="brand brand--light" href="/" aria-label="Scholarly, oleh Titik Nol English Course">
+          <span class="brand-word">Scholarly</span>
+          <span class="brand-sub">by Titik Nol English Course</span>
+        </a>
+        <p class="footer-desc">Direktori beasiswa terkurasi untuk pelajar Indonesia, dari dalam negeri sampai luar negeri.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Beasiswa Populer</h3>
+        <ul>
+          <li><a href="/?q=Beasiswa%20LPDP">Beasiswa LPDP</a></li>
+          <li><a href="/?q=Chevening">Chevening</a></li>
+          <li><a href="/?q=MEXT">MEXT</a></li>
+          <li><a href="/?q=GKS">GKS</a></li>
+          <li><a href="/?q=NL%20Scholarship">NL Scholarship</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Titik Nol English Course</h3>
+        <ul>
+          <li><a href="https://titiknolenglish.com/beasiswa-kursus-kampung-inggris/">Scholarship Mentoring</a></li>
+          <li><a href="https://titiknolenglish.com/">Kursus IELTS</a></li>
+          <li><a href="https://titiknolenglish.com/">Kursus TOEFL</a></li>
+          <li><a href="https://titiknolenglish.com/">Hubungi Kami</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Titik Nol English Course &copy; 2026</p>
+      <div class="footer-social">
+        <a href="https://titiknolenglish.com/" aria-label="Instagram Titik Nol"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="2" y="2" width="14" height="14" rx="4" stroke="currentColor" stroke-width="1.6"/><circle cx="9" cy="9" r="3.2" stroke="currentColor" stroke-width="1.6"/><circle cx="13" cy="5" r="1" fill="currentColor"/></svg></a>
+        <a href="https://titiknolenglish.com/" aria-label="YouTube Titik Nol"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="1.5" y="4" width="15" height="10.5" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M7.5 7l4 2.25L7.5 11.5V7z" fill="currentColor"/></svg></a>
+        <a href="https://titiknolenglish.com/" aria-label="WhatsApp Titik Nol"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 16.5a7.5 7.5 0 1 0-6.6-4L1.5 16.5l4.1-.9A7.5 7.5 0 0 0 9 16.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="/static/js/app.v2.js" defer></script>
+</body>
+</html>

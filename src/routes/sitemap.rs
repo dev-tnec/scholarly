@@ -17,6 +17,7 @@ struct SitemapRow {
 #[template(path = "sitemap.xml", escape = "none")]
 struct SitemapView {
     base_url: String,
+    home_lastmod: String,
     entries: Vec<SitemapEntry>,
 }
 
@@ -27,7 +28,9 @@ struct SitemapEntry {
 
 pub async fn sitemap(State(state): State<AppState>) -> Response {
     let rows: Result<Vec<SitemapRow>, _> = sqlx::query_as(
-        "SELECT slug, checked_at FROM scholarships WHERE published ORDER BY checked_at DESC, slug",
+        "SELECT slug, checked_at FROM scholarships \
+         WHERE published AND checked_at >= CURRENT_DATE - 180 \
+         ORDER BY checked_at DESC, slug",
     )
     .fetch_all(&state.pool)
     .await;
@@ -36,8 +39,13 @@ pub async fn sitemap(State(state): State<AppState>) -> Response {
         Err(e) => return server_error("sitemap", e),
     };
     let base = &state.config.base_url;
+    let home_lastmod = rows
+        .first()
+        .map(|r| r.checked_at.format("%Y-%m-%d").to_string())
+        .unwrap_or_else(|| chrono::Utc::now().format("%Y-%m-%d").to_string());
     let view = SitemapView {
         base_url: base.to_string(),
+        home_lastmod,
         entries: rows
             .into_iter()
             .map(|r| SitemapEntry {

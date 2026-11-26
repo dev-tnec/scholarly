@@ -206,6 +206,14 @@ impl WhereBuilder {
     }
 }
 
+fn rows_sql(select: &str, where_sql: &str, order: &str, bind_count: usize) -> String {
+    format!(
+        "{select} {where_sql} ORDER BY {order}, s.slug ASC LIMIT ${} OFFSET ${}",
+        bind_count + 1,
+        bind_count + 2
+    )
+}
+
 fn add_filters(where_: &mut WhereBuilder, f: &DirectoryFilters) {
     if !f.q.is_empty() {
         where_.push_like(&f.q);
@@ -334,15 +342,13 @@ async fn render(state: AppState, f: DirectoryFilters) -> Response {
 
     let offset = (f.page - 1).max(0) * PER_PAGE;
     let rows_query = where_main;
-    let select = format!(
-        "SELECT s.slug, s.name, s.provider, s.country, s.levels, s.funding_type, s.close_date, \
-         s.deadline_type FROM scholarships s ORDER BY {}, s.slug ASC",
-        f.sort.order_clause()
-    );
-    let query = format!(
-        "{select} LIMIT ${} OFFSET ${}",
-        rows_query.binds.len() + 1,
-        rows_query.binds.len() + 2
+    let select = "SELECT s.slug, s.name, s.provider, s.country, s.levels, s.funding_type, s.close_date, \
+                  s.deadline_type FROM scholarships s";
+    let query = rows_sql(
+        select,
+        &rows_query.sql(),
+        f.sort.order_clause(),
+        rows_query.binds.len(),
     );
     // Constant fragments only, see the audit note in fetch_all.
     let mut q = sqlx::query_as::<_, CardRow>(sqlx::AssertSqlSafe(query));
@@ -672,5 +678,23 @@ fn card_view(row: CardRow, today: NaiveDate) -> CardView {
             .unwrap_or('B')
             .to_uppercase()
             .to_string(),
+    }
+}
+
+#[cfg(test)]
+mod rows_sql_tests {
+    #[test]
+    fn rows_sql_keeps_where_before_order() {
+        let sql = super::rows_sql(
+            "SELECT 1 FROM scholarships s",
+            "WHERE a = $1",
+            "s.close_date",
+            1,
+        );
+        assert!(
+            sql.contains("WHERE a = $1 ORDER BY s.close_date, s.slug ASC"),
+            "{sql}"
+        );
+        assert!(sql.contains("LIMIT $2 OFFSET $3"), "{sql}");
     }
 }

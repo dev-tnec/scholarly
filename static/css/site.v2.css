@@ -299,7 +299,10 @@ input[type="search"] { -webkit-appearance: none; appearance: none; }
 .results-col { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
 
 /* ---------------------------------------------------------------- filter rail */
-.filter-rail { position: sticky; top: 92px; }
+.filter-rail { position: sticky; top: 92px; max-height: calc(100vh - 112px); overflow-y: auto; overscroll-behavior: contain; padding-right: 4px; scrollbar-width: thin; }
+.filter-rail::-webkit-scrollbar { width: 8px; }
+.filter-rail::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 999px; }
+.filter-rail::-webkit-scrollbar-track { background: transparent; }
 .filter-card { padding: 20px; }
 .filter-head {
   display: flex; align-items: center; justify-content: space-between;
